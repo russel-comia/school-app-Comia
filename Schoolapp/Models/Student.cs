@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SchoolApp.Validation;
 
 namespace Schoolapp.Models
 {
@@ -27,6 +29,14 @@ namespace Schoolapp.Models
         [EmailAddress(ErrorMessage = "Please enter a valid email, like ana@example.com.")]
         public string? Email { get; set; }
 
+        [Display(Name = "Confirm Email")]
+        [Required(ErrorMessage = "Please type the email again.")]
+        // [NotMapped]: form only, not saved as a column
+        [NotMapped]
+        // [Compare("Email")]: must be exactly the same as Email
+        [Compare("Email", ErrorMessage = "Emails do not match.")]
+        public string? ConfirmEmail { get; set; }
+
          [Display(Name = "Phone Number")]
         [Phone(ErrorMessage = "Please enter a valid phone number.")]
         public string? Phone { get; set; }
@@ -34,6 +44,11 @@ namespace Schoolapp.Models
        [Range(16, 60, ErrorMessage = "Age must be from 16 to 60.")]
         public int? Age { get; set; }
 
+                [Display(Name = "Birth Date")]
+        // Shows a date picker without the time
+        [DataType(DataType.Date)]
+        // Our custom rule from Validation/NotFutureDateAttribute.cs
+        [NotFutureDate(ErrorMessage = "Birth date can't be in the future.")]
         public DateTime? BirthDate { get; set; }
     }
 }
