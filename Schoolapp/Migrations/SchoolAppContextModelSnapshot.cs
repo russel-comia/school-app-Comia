@@ -42,6 +42,7 @@ namespace Schoolapp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StudentNo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("StudentId");
